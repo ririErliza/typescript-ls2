@@ -1,50 +1,50 @@
 // //-----------BASIC TYPES---------------------------
 
-// // let myName : string = 'Lili'
+// let myName : string = 'Lili'
 
 
-// // we dont have to declare the value right away
-// let myName : string; 
-// let meaningOfLife : number;
-// let isLoading : boolean;
-// let album : any; // with any - we can assign any types
-// let fruit : number | string; // this is union type, fruit can be number or string
+// we dont have to declare the value right away
+//let myName : string; 
+let meaningOfLife : number;
+let isLoading : boolean;
+let album : any; // with any - we can assign any types
+let fruit : number | string; // this is union type, fruit can be number or string
 
 
 // myName = 'Lili'
 // myName = 'John' // we can re-assign another value (as long it is string)
-//                 // but if use const we cant reassign new value
+                // but if use const we cant reassign new value
 
-// meaningOfLife = 42
-// isLoading = true
-// album = 1984
-// album = 'Delilah'
-// album = true
+meaningOfLife = 42
+isLoading = true
+album = 1984
+album = 'Delilah'
+album = true
 
 
-// //----------------------------------------------------
+//----------------------------------------------------
 
-// // const sum = (a,b)=>{
-// //     return a+b
-// // }
-// //ts not happy when we type as above
-
-// const sum1 = (a:number,b:string)=>{
+// const sum = (a,b)=>{
 //     return a+b
 // }
+//ts not happy when we type as above
 
-// const sum2 = (a:number,b:number)=>{
-//     return a+b
-// }
+const sum1 = (a:number,b:string)=>{
+    return a+b
+}
 
-// // both are okay 
+const sum2 = (a:number,b:number)=>{
+    return a+b
+}
 
-// //----------------------------------------------------
+// both are okay 
 
-// let postId : string | number;
-// let isActive : number | boolean | string;
+//----------------------------------------------------
 
-// let re:RegExp = /\w+g/
+let postId : string | number;
+let isActive : number | boolean | string;
+
+let re:RegExp = /\w+g/
 
 
 
@@ -212,6 +212,38 @@ const greetEmployers = (employers: Employers) =>{
 console.log(greetEmployers(rb))
 
 
+type Gorengan = {
+    name?: string,
+    fried: boolean,  // boolean | undefined
+    vendors: (string|number)[] // union type inside the array
+}
+
+let th : Gorengan = {
+    name : 'TahuIsi',
+    fried: true,
+    vendors : [1, 'II', 3, 'IV']
+}
+
+// we dont declare active prop here and it's ok
+// because we put the question mark at active prop at Actors type
+let bk : Gorengan = {
+    name : 'Bakwan',
+    fried: true,
+    vendors : [1, 'II', 3, 'IV']
+}
+
+
+const beliGorengan = (gorengan: Gorengan) =>{
+    if(gorengan.name){
+        return ` Mau beli ${gorengan.name.toUpperCase()}!`
+    }
+    return 'Mau beli apa si ?!'
+}
+
+
+console.log(beliGorengan(bk))
+
+
 // Enums
 // An enum is a special "class" that represents a group of constants (unchangeable variables).
 // Enums come in two flavors string and numeric.
@@ -252,7 +284,7 @@ type stringOrNumberArray = (string|number)[]
 //     sellers: (string|number)[]
 // }
 // above can be code as below
-type Gorengan = {
+type Gorengan1 = {
     name?: string,
     packing: boolean,
     sellers: stringOrNumberArray
@@ -314,6 +346,82 @@ let substract: mathFunction2 = function(c,d) {
 }
 
 logMsg(substract(9,7)) // 2
+
+// optional parameters
+const addAll = (a:number,b:number,c?:number): number =>{
+    if (typeof c !== 'undefined'){
+        return a+b+c
+    }
+    return a+b
+}
+
+// default param value
+const sumAll = (a:number,b:number,c:number=2): number =>{
+    return a+b+c
+}
+
+const sumAll2 = (a:number=10,b:number,c:number=2): number =>{
+    return a+b+c
+}
+
+logMsg(addAll(1,3,4)) // 8
+logMsg(addAll(1,3)) // 4
+logMsg(sumAll(1,3)) // 6
+logMsg(sumAll2(undefined,3)) // 15
+
+// rest parameters
+
+const total1 = (a:number, ...nums:number[]):number=>{
+    return a + nums.reduce((prev,curr)=> prev + curr)
+}
+
+logMsg(total1(10,2,3))
+
+const total2 = (...nums:number[]):number=>{
+    return nums.reduce((prev,curr)=> prev + curr)
+}
+logMsg(total2(10,2,3))
+
+
+// this one will throw error  
+// A rest parameter must be last in a parameter list
+// const total3 = (...nums:number[], c:number) :number=>{
+//     return nums.reduce((prev,curr)=> prev + curr) + c
+// }
+// logMsg(total3(10,2,3))  
+
+
+const createError = (errMsg: string) : never =>{
+    throw new Error(errMsg)
+}
+
+const infinite = () =>{
+    let i: number = 1
+    while (true){
+        i++
+        if(1>100) break
+    }
+}
+
+// custom type guard
+const isNumber = (value: any): boolean =>{
+    return typeof value === 'number'?true:false
+}
+
+// use of the never type
+// const numberOrString = (value:number | string):string => {
+//     if(typeof value === 'string') return 'string'
+//     if(typeof value === 'number') return 'number'
+//     return createError('This should never happen!')
+// }
+const numberOrString = (value:number | string):string => {
+    if(typeof value === 'string') return 'string'
+    if(isNumber(value)) return 'number'
+    return createError('This should never happen!')
+}
+
+
+//--------------------ASSERTIONS----------------------------
 
 
 
