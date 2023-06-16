@@ -59,3 +59,38 @@ let mixed = ['John', 1, false]; // union type
 // Type '(string|number|boolean)[]' is not assignable to type '[string, number, boolean]
 // Target requires 3 elements but source my have fewer
 mixed = myTuple;
+myTuple[1] = 55;
+// myTuple[3] = 55; //Type '55' is not assignable to type 'undefined'
+// myTuple[2] = 55; //Type 'number' is not assignable to type 'boolean'
+//____ OBJECTS____
+let myObj;
+myObj = [];
+console.log(typeof myObj);
+myObj = bands;
+myObj = {};
+const exampleObj = {
+    prop1: 'Dave',
+    prop2: true,
+};
+exampleObj.prop1 = 'John';
+let hw = {
+    name: 'Hwasa',
+    active: false,
+    albums: [18, 'Trouble', 5150]
+};
+let lhy = {
+    name: 'Hyori',
+    active: true,
+    albums: ['Vacation', 'Hup']
+};
+let shk = {
+    name: 'Hyekyo',
+    active: true,
+    projects: [1, 'II', 3, 'IV']
+};
+// we dont declare active prop here and it's ok
+// because we put the question mark at active prop at Actors type
+let mh = {
+    name: 'Monho',
+    projects: [1, 'II', 3, 'IV']
+};

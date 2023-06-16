@@ -97,3 +97,65 @@ let mixed = ['John', 1, false] // union type
         // Target requires 3 elements but source my have fewer
 
 mixed = myTuple
+
+myTuple[1] = 55;
+// myTuple[3] = 55; //Type '55' is not assignable to type 'undefined'
+// myTuple[2] = 55; //Type 'number' is not assignable to type 'boolean'
+
+
+
+
+//____ OBJECTS____
+
+let myObj : object
+myObj = []
+console.log(typeof myObj)
+myObj = bands
+myObj = {}
+
+const exampleObj = {
+    prop1: 'Dave',
+    prop2: true,
+}
+
+exampleObj.prop1 = 'John'
+
+type Singers = {
+    name: string,
+    active: boolean,
+    albums: (string|number)[] // union type inside the array
+}
+
+let hw : Singers = {
+    name : 'Hwasa',
+    active: false,
+    albums : [18, 'Trouble', 5150]
+}
+
+let lhy : Singers = {
+    name : 'Hyori',
+    active: true,
+    albums : ['Vacation', 'Hup']
+}
+
+// hw.years = 1989 // doesnt work because we dont have years in Singers
+
+
+type Actors = {
+    name: string,
+    active?: boolean,  // boolean | undefined
+    projects: (string|number)[] // union type inside the array
+}
+
+let shk : Actors = {
+    name : 'Hyekyo',
+    active: true,
+    projects : [1, 'II', 3, 'IV']
+}
+
+// we dont declare active prop here and it's ok
+// because we put the question mark at active prop at Actors type
+let mh : Actors = {
+    name : 'Monho',
+    projects : [1, 'II', 3, 'IV']
+}
