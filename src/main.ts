@@ -48,6 +48,7 @@
 
 
 
+
 //----------------ARRAYS & OBJECTS-----------------------
 
 //____ ARRAYS____
@@ -120,6 +121,10 @@ const exampleObj = {
 
 exampleObj.prop1 = 'John'
 
+
+
+
+
 type Singers = {
     name: string,
     active: boolean,
@@ -141,6 +146,9 @@ let lhy : Singers = {
 // hw.years = 1989 // doesnt work because we dont have years in Singers
 
 
+
+
+
 type Actors = {
     name: string,
     active?: boolean,  // boolean | undefined
@@ -156,6 +164,245 @@ let shk : Actors = {
 // we dont declare active prop here and it's ok
 // because we put the question mark at active prop at Actors type
 let mh : Actors = {
-    name : 'Monho',
+    name : 'Minho',
     projects : [1, 'II', 3, 'IV']
 }
+
+
+const greetActors = (actors: Actors) =>{
+    return ` Hello ${actors.name}!`
+}
+
+
+console.log(greetActors(shk))
+
+
+
+// INTERFACE
+// Interfaces are similar to type aliases, except they only apply to object types.
+
+interface Employers {
+    name?: string,
+    active: boolean,  // boolean | undefined
+    projects: (string|number)[] // union type inside the array
+}
+
+let kr : Employers = {
+    name : 'Karami',
+    active: true,
+    projects : [1, 'II', 3, 'IV']
+}
+
+// we dont declare active prop here and it's ok
+// because we put the question mark at active prop at Actors type
+let rb : Employers = {
+    active: true,
+    projects : [1, 'II', 3, 'IV']
+}
+
+
+const greetEmployers = (employers: Employers) =>{
+    if(employers.name){
+        return ` Hello ${employers.name.toUpperCase()}!`
+    }
+    return 'Hello!'
+}
+
+
+console.log(greetEmployers(rb))
+
+
+// Enums
+// An enum is a special "class" that represents a group of constants (unchangeable variables).
+// Enums come in two flavors string and numeric.
+
+enum Grade{
+    A,
+    B,
+    C,
+    D
+}
+
+console.log(Grade.A) // 0
+
+
+// Numeric Enums - Initialized
+// You can set the value of the first numeric enum and have it auto increment from that:
+enum Tier{
+    A=1,
+    B,
+    C,
+    D
+}
+
+console.log(Tier.C) // 3
+
+
+
+//--------------------??????????----------------------------
+
+// Type Aliases
+type stringOrNumber = string | number
+
+type stringOrNumberArray = (string|number)[]
+
+// type Gorengan = {
+//     name?: string,
+//     packing: boolean,
+//     sellers: (string|number)[]
+// }
+// above can be code as below
+type Gorengan = {
+    name?: string,
+    packing: boolean,
+    sellers: stringOrNumberArray
+}
+
+type userId = stringOrNumber
+
+// interface postId = stringOrNumber // doesnt work
+
+// Literal types
+let myName : 'Lili'
+//myName = 'John' // ts doesnt like this
+
+let userName: 'AMy' |'Hailey'|'Molly'
+//userName= 'stacy' // ts doesnt like this
+userName = 'Hailey' //ok
+userName='Molly' //ok
+
+
+//--------------------FUNCTIONS----------------------------
+
+const add = (a:number, b:number): number =>{
+    return a+b
+}
+
+add(1,4)// 5
+
+// any function that doesnt have return statement
+// should have void type of return data (which means there is no return at all)
+
+// const lgMsg = (message: any) =>{
+//     console.log(message)
+// }
+
+const logMsg = (message: any):void =>{
+    console.log(message)
+}
+
+logMsg('Yuhuuuu!!!')
+logMsg(add(2,5))
+
+
+
+type mathFunction1 = (a:number, b:number) => number
+
+let multiply: mathFunction1 = function(c,d) {
+    return c*d
+}
+
+logMsg(multiply(2,3)) // 6
+
+
+interface mathFunction2 {
+    (a:number, b:number):number
+}
+
+let substract: mathFunction2 = function(c,d) {
+    return c-d
+}
+
+logMsg(substract(9,7)) // 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -91,6 +91,80 @@ let shk = {
 // we dont declare active prop here and it's ok
 // because we put the question mark at active prop at Actors type
 let mh = {
-    name: 'Monho',
+    name: 'Minho',
     projects: [1, 'II', 3, 'IV']
 };
+const greetActors = (actors) => {
+    return ` Hello ${actors.name}!`;
+};
+console.log(greetActors(shk));
+let kr = {
+    name: 'Karami',
+    active: true,
+    projects: [1, 'II', 3, 'IV']
+};
+// we dont declare active prop here and it's ok
+// because we put the question mark at active prop at Actors type
+let rb = {
+    active: true,
+    projects: [1, 'II', 3, 'IV']
+};
+const greetEmployers = (employers) => {
+    if (employers.name) {
+        return ` Hello ${employers.name.toUpperCase()}!`;
+    }
+    return 'Hello!';
+};
+console.log(greetEmployers(rb));
+// Enums
+// An enum is a special "class" that represents a group of constants (unchangeable variables).
+// Enums come in two flavors string and numeric.
+var Grade;
+(function (Grade) {
+    Grade[Grade["A"] = 0] = "A";
+    Grade[Grade["B"] = 1] = "B";
+    Grade[Grade["C"] = 2] = "C";
+    Grade[Grade["D"] = 3] = "D";
+})(Grade || (Grade = {}));
+console.log(Grade.A); // 0
+// Numeric Enums - Initialized
+// You can set the value of the first numeric enum and have it auto increment from that:
+var Tier;
+(function (Tier) {
+    Tier[Tier["A"] = 1] = "A";
+    Tier[Tier["B"] = 2] = "B";
+    Tier[Tier["C"] = 3] = "C";
+    Tier[Tier["D"] = 4] = "D";
+})(Tier || (Tier = {}));
+console.log(Tier.C); // 3
+// interface postId = stringOrNumber // doesnt work
+// Literal types
+let myName;
+//myName = 'John' // ts doesnt like this
+let userName;
+//userName= 'stacy' // ts doesnt like this
+userName = 'Hailey'; //ok
+userName = 'Molly'; //ok
+//--------------------FUNCTIONS----------------------------
+const add = (a, b) => {
+    return a + b;
+};
+add(1, 4); // 5
+// any function that doesnt have return statement
+// should have void type of return data (which means there is no return at all)
+// const lgMsg = (message: any) =>{
+//     console.log(message)
+// }
+const logMsg = (message) => {
+    console.log(message);
+};
+logMsg('Yuhuuuu!!!');
+logMsg(add(2, 5));
+let multiply = function (c, d) {
+    return c * d;
+};
+logMsg(multiply(2, 3)); // 6
+let substract = function (c, d) {
+    return c - d;
+};
+logMsg(substract(9, 7)); // 2
