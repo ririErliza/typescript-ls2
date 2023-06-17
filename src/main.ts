@@ -467,179 +467,199 @@
 // img1.src
 // myImg1.src
 
-//--------------------CLASSES---------------------------
+// //--------------------CLASSES---------------------------
 
-class CoderExample{
-    name: string
-    music: string
-    age: number
-    lang: string
+// class CoderExample{
+//     name: string
+//     music: string
+//     age: number
+//     lang: string
 
-    constructor(
-        name: string, 
-        music:string, 
-        age:number, 
-        lang:string
-    ){
-        this.name = name
-        this.music= music
-        this.age= age
-        this.lang= lang
-    }
+//     constructor(
+//         name: string, 
+//         music:string, 
+//         age:number, 
+//         lang:string
+//     ){
+//         this.name = name
+//         this.music= music
+//         this.age= age
+//         this.lang= lang
+//     }
+// }
+
+// // the code above is too long
+// // below is the DRYer version
+
+// class Coder1{
+
+//     constructor(
+//         public name: string, 
+//         public music:string, 
+//         public age:number, 
+//         public lang:string
+//     ){
+//         this.name = name
+//         this.music= music
+//         this.age= age
+//         this.lang= lang
+//     }
+// }
+
+// // or
+// class Coder2{
+
+//     constructor(
+//         public readonly name: string, 
+//         readonly music:string, 
+//         private age:number, 
+//         protected lang:string = 'Typescript'
+//     ){
+//         this.name
+//         this.music
+//         this.age
+//         this.lang
+//     }
+
+//     public getAge(){
+//         return `Hello, I'm ${this.age}`
+//     }
+// }
+
+// const John = new Coder2('John Smith', 'Rock',  44)
+
+// console.log(John)
+// console.log(John.getAge())
+// // console.log(John.age) // property age is private
+// // console.log(John.lang) // property lang is protected
+
+
+// class WebDev extends Coder2 {
+//     constructor(
+//         public computer: string,
+//         name: string,
+//         music: string,
+//         age: number,
+//     ){
+//         super(name, music, age)
+//         this.computer
+//     }
+
+//     public getLang() {
+//         return `I write ${this.lang}`
+//     }
+// }
+
+// const Sara = new WebDev ('Win', 'Sara', 'Rock', 22)
+// console.log(Sara.getLang())
+// // console.log(Sara.age) // property age is private
+// // console.log(Sara.lang) // property lang is protected
+
+// // // // // // // // // // // // // // // // // // // // //
+
+// // interface with 2 properties and 1 method
+// interface Musician {
+//     name: string,
+//     instrument: string,
+//     play(action: string): string
+// }
+
+// class Guitarist implements Musician{
+//     name : string
+//     instrument: string
+
+//     constructor(name:string, instrument:string){
+//         this.name = name
+//         this.instrument = instrument
+//     }
+//     play(action: string){
+//         return `${this.name} ${action} the ${this.instrument}`
+//     }
+// }
+
+// const Page = new Guitarist('Jimmy', 'guitar')
+// console.log(Page.play('strums'))
+// // Jimmy strums the guitar
+
+// // // // // // // // // // // // // // // // // // // // //
+
+// class Peeps{
+//     static count: number = 0
+
+//     static getCount(): number{
+//         return Peeps.count
+//     }
+//     public id:number
+
+//     constructor(public name:string){
+//         this.name = name
+//         this.id = ++Peeps.count
+//     }
+// }
+
+// const Jane = new Peeps('Jane')
+// const Steve = new Peeps('Steve')
+// const Amy = new Peeps('Amy')
+
+// console.log(Amy.id)
+// console.log(Steve.id)
+// console.log(Peeps.count) // 2
+
+
+// // // // // // // // // // // // // // // // // // // // //
+
+// class Bands {
+//     private dataState: string[]
+
+//     constructor(){
+//         this.dataState = []
+//     }
+
+//     public get data(): string[]{
+//         return this.dataState
+//     }
+
+//     public set data(value:string[]){
+//         if(Array.isArray(value) && value.every(el => typeof el === 'string')){
+//             this.dataState = value
+//             return
+//         }else throw new Error('Param is not an array of strings')
+//     }
+// }
+
+// const MyBands = new Bands()
+// MyBands.data = ['Neil Young', 'Led Zep']
+// console.log(MyBands.data) // ['Neil Young', 'Led Zep']
+// MyBands.data = [...MyBands.data, 'ZZ Top']
+// console.log(MyBands.data) //  ['Neil Young', 'Led Zep', 'ZZ Top']
+// // MyBands.data = ['Van Halen', 5569] // doesnt work ; Type 'number' is not assignable to type 'string'.
+// // console.log(MyBands.data)
+// MyBands.data = ['Van Halen', 'RockyRok']
+// console.log(MyBands.data)
+
+
+
+
+
+//------------------INDEX SIGNATURES-----------------------
+//--------------------------&------------------------------
+//-----------------KEY OF ASSERTIONS-----------------------
+
+// Index SIgnatures
+interface TransactionObj{
+    Pizza: number,
+    Books: number,
+    Job: number
 }
 
-// the code above is too long
-// below is the DRYer version
-
-class Coder1{
-
-    constructor(
-        public name: string, 
-        public music:string, 
-        public age:number, 
-        public lang:string
-    ){
-        this.name = name
-        this.music= music
-        this.age= age
-        this.lang= lang
-    }
+const todaysTransactions: TransactionObj = {
+    Pizza: -10,
+    Books: -5,
+    Job: 50
 }
 
-// or
-class Coder2{
-
-    constructor(
-        public readonly name: string, 
-        readonly music:string, 
-        private age:number, 
-        protected lang:string = 'Typescript'
-    ){
-        this.name
-        this.music
-        this.age
-        this.lang
-    }
-
-    public getAge(){
-        return `Hello, I'm ${this.age}`
-    }
-}
-
-const John = new Coder2('John Smith', 'Rock',  44)
-
-console.log(John)
-console.log(John.getAge())
-// console.log(John.age) // property age is private
-// console.log(John.lang) // property lang is protected
-
-
-class WebDev extends Coder2 {
-    constructor(
-        public computer: string,
-        name: string,
-        music: string,
-        age: number,
-    ){
-        super(name, music, age)
-        this.computer
-    }
-
-    public getLang() {
-        return `I write ${this.lang}`
-    }
-}
-
-const Sara = new WebDev ('Win', 'Sara', 'Rock', 22)
-console.log(Sara.getLang())
-// console.log(Sara.age) // property age is private
-// console.log(Sara.lang) // property lang is protected
-
-// // // // // // // // // // // // // // // // // // // //
-
-// interface with 2 properties and 1 method
-interface Musician {
-    name: string,
-    instrument: string,
-    play(action: string): string
-}
-
-class Guitarist implements Musician{
-    name : string
-    instrument: string
-
-    constructor(name:string, instrument:string){
-        this.name = name
-        this.instrument = instrument
-    }
-    play(action: string){
-        return `${this.name} ${action} the ${this.instrument}`
-    }
-}
-
-const Page = new Guitarist('Jimmy', 'guitar')
-console.log(Page.play('strums'))
-// Jimmy strums the guitar
-
-// // // // // // // // // // // // // // // // // // // //
-
-class Peeps{
-    static count: number = 0
-
-    static getCount(): number{
-        return Peeps.count
-    }
-    public id:number
-
-    constructor(public name:string){
-        this.name = name
-        this.id = ++Peeps.count
-    }
-}
-
-const Jane = new Peeps('Jane')
-const Steve = new Peeps('Steve')
-const Amy = new Peeps('Amy')
-
-console.log(Amy.id)
-console.log(Steve.id)
-console.log(Peeps.count) // 2
-
-
-// // // // // // // // // // // // // // // // // // // //
-
-class Bands {
-    private dataState: string[]
-
-    constructor(){
-        this.dataState = []
-    }
-
-    public get data(): string[]{
-        return this.dataState
-    }
-
-    public set data(value:string[]){
-        if(Array.isArray(value) && value.every(el => typeof el === 'string')){
-            this.dataState = value
-            return
-        }else throw new Error('Param is not an array of strings')
-    }
-}
-
-const MyBands = new Bands()
-MyBands.data = ['Neil Young', 'Led Zep']
-console.log(MyBands.data)
-MyBands.data = [...MyBands.data]
-
-
-
-
-
-
-
-
-
+console.log(todaysTransactions.Pizza) // -10
+console.log(todaysTransactions['Job']) // 50
 
 
 
