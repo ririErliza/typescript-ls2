@@ -421,57 +421,216 @@
 // }
 
 
-//--------------------ASSERTIONS----------------------------
-// as
+// //--------------------ASSERTIONS----------------------------
+// // as
 
-type One = string
-type Two = string | number
-type Three = 'hello'
+// type One = string
+// type Two = string | number
+// type Three = 'hello'
 
-// convert to more or less specific
+// // convert to more or less specific
 
-let a: One = 'hello'
-let b = a as Two // less specific
-let c = a as Three // more specific
+// let a: One = 'hello'
+// let b = a as Two // less specific
+// let c = a as Three // more specific
 
-// below is a way to write the code as above but cant be used in react
-let d = <One>'world'
-let e = <string | number>'world'
+// // below is a way to write the code as above but cant be used in react
+// let d = <One>'world'
+// let e = <string | number>'world'
 
-//---------------------------------
+// //---------------------------------
 
-const addOrConcat = (a:number, b:number, c:'add'|'concat') : number | string =>{
-    if (c === 'add') return a + b
-    return ''+ a + b
+// const addOrConcat = (a:number, b:number, c:'add'|'concat') : number | string =>{
+//     if (c === 'add') return a + b
+//     return ''+ a + b
+// }
+
+// // let myVal: string = addOrConcat(2,2,'concat')
+// // doesnt work
+// // Type 'string|number is not assignable to type 'string'
+// // Type 'number' is not assignable to type 'string'
+
+// let myVal: string = addOrConcat(2,2,'concat') as string
+// // adding assertion will make it work
+
+
+// // be careful TS sees no problem - but a string is returned
+// let nextVal: number = addOrConcat(2,2,'concat') as number
+
+// // the DOM
+// const img = document.querySelector('img')
+// const myImg = document.getElementById('#img')
+
+// const img1 = document.querySelector('img')!
+// const myImg1 = document.getElementById('#img') as HTMLImageElement
+
+// img1.src
+// myImg1.src
+
+//--------------------CLASSES---------------------------
+
+class CoderExample{
+    name: string
+    music: string
+    age: number
+    lang: string
+
+    constructor(
+        name: string, 
+        music:string, 
+        age:number, 
+        lang:string
+    ){
+        this.name = name
+        this.music= music
+        this.age= age
+        this.lang= lang
+    }
 }
 
-// let myVal: string = addOrConcat(2,2,'concat')
-// doesnt work
-// Type 'string|number is not assignable to type 'string'
-// Type 'number' is not assignable to type 'string'
+// the code above is too long
+// below is the DRYer version
 
-let myVal: string = addOrConcat(2,2,'concat') as string
-// adding assertion will make it work
+class Coder1{
+
+    constructor(
+        public name: string, 
+        public music:string, 
+        public age:number, 
+        public lang:string
+    ){
+        this.name = name
+        this.music= music
+        this.age= age
+        this.lang= lang
+    }
+}
+
+// or
+class Coder2{
+
+    constructor(
+        public readonly name: string, 
+        readonly music:string, 
+        private age:number, 
+        protected lang:string = 'Typescript'
+    ){
+        this.name
+        this.music
+        this.age
+        this.lang
+    }
+
+    public getAge(){
+        return `Hello, I'm ${this.age}`
+    }
+}
+
+const John = new Coder2('John Smith', 'Rock',  44)
+
+console.log(John)
+console.log(John.getAge())
+// console.log(John.age) // property age is private
+// console.log(John.lang) // property lang is protected
 
 
-// be careful TS sees no problem - but a string is returned
-let nextVal: number = addOrConcat(2,2,'concat') as number
+class WebDev extends Coder2 {
+    constructor(
+        public computer: string,
+        name: string,
+        music: string,
+        age: number,
+    ){
+        super(name, music, age)
+        this.computer
+    }
 
-// the DOM
-const img = document.querySelector('img')
-const myImg = document.getElementById('#img')
+    public getLang() {
+        return `I write ${this.lang}`
+    }
+}
 
-const img1 = document.querySelector('img')!
-const myImg1 = document.getElementById('#img') as HTMLImageElement
+const Sara = new WebDev ('Win', 'Sara', 'Rock', 22)
+console.log(Sara.getLang())
+// console.log(Sara.age) // property age is private
+// console.log(Sara.lang) // property lang is protected
 
-img1.src
-myImg1.src
+// // // // // // // // // // // // // // // // // // // //
+
+// interface with 2 properties and 1 method
+interface Musician {
+    name: string,
+    instrument: string,
+    play(action: string): string
+}
+
+class Guitarist implements Musician{
+    name : string
+    instrument: string
+
+    constructor(name:string, instrument:string){
+        this.name = name
+        this.instrument = instrument
+    }
+    play(action: string){
+        return `${this.name} ${action} the ${this.instrument}`
+    }
+}
+
+const Page = new Guitarist('Jimmy', 'guitar')
+console.log(Page.play('strums'))
+// Jimmy strums the guitar
+
+// // // // // // // // // // // // // // // // // // // //
+
+class Peeps{
+    static count: number = 0
+
+    static getCount(): number{
+        return Peeps.count
+    }
+    public id:number
+
+    constructor(public name:string){
+        this.name = name
+        this.id = ++Peeps.count
+    }
+}
+
+const Jane = new Peeps('Jane')
+const Steve = new Peeps('Steve')
+const Amy = new Peeps('Amy')
+
+console.log(Amy.id)
+console.log(Steve.id)
+console.log(Peeps.count) // 2
 
 
+// // // // // // // // // // // // // // // // // // // //
 
+class Bands {
+    private dataState: string[]
 
+    constructor(){
+        this.dataState = []
+    }
 
+    public get data(): string[]{
+        return this.dataState
+    }
 
+    public set data(value:string[]){
+        if(Array.isArray(value) && value.every(el => typeof el === 'string')){
+            this.dataState = value
+            return
+        }else throw new Error('Param is not an array of strings')
+    }
+}
+
+const MyBands = new Bands()
+MyBands.data = ['Neil Young', 'Led Zep']
+console.log(MyBands.data)
+MyBands.data = [...MyBands.data]
 
 
 
